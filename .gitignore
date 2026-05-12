@@ -1,0 +1,20 @@
+# VSCode local
+.vscode/
+
+# CI3 configs
+app/application/config/production/*
+!app/application/config/production/index.html
+
+app/application/config/development/*
+!app/application/config/development/index.html
+
+# Composer
+app/application/vendor/
+app/composer.lock
+
+# Logs & cache
+app/application/logs/*
+!app/application/logs/index.html
+
+app/application/cache/*
+!app/application/cache/index.html
