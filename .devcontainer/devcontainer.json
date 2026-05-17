@@ -23,7 +23,6 @@
       "extensions": [
         "DEVSENSE.phptools-vscode",
         "small.php-ci",
-        "thang-nm.flow-icons",
         "kisstkondoros.vscode-gutter-preview"
       ]
     }
