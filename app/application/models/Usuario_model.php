@@ -7,7 +7,7 @@
  */
 class Usuario_model extends CI_Model
 {
-  private const TABLE = 'usuarios';
+  private string $TABLE = 'usuarios';
 
   public function __construct()
   {
@@ -23,7 +23,7 @@ class Usuario_model extends CI_Model
   {
     $row = $this->db->where('id', $id)
       ->where('estaActivo', true)
-      ->get(self::TABLE)
+      ->get($this->TABLE)
       ->row_array();
 
     return $row ? new Usuario($row) : null;
@@ -37,7 +37,7 @@ class Usuario_model extends CI_Model
   {
     $this->db->where('estaActivo', true);
 
-    $rows = $this->db->get(self::TABLE)->result_array();
+    $rows = $this->db->get($this->TABLE)->result_array();
 
     return array_map(fn(array $row): Usuario => new Usuario($row), $rows);
   }
@@ -45,7 +45,7 @@ class Usuario_model extends CI_Model
   public function findByNombre(string $nombre): ?Usuario
   {
     $row = $this->db->where('nombre', $nombre)
-      ->get(self::TABLE)
+      ->get($this->TABLE)
       ->row_array();
 
     return $row ? new Usuario($row) : null;
@@ -58,7 +58,7 @@ class Usuario_model extends CI_Model
    */
   public function create(Usuario $usuario): int
   {
-    $this->db->insert(self::TABLE, [
+    $this->db->insert($this->TABLE, [
       'nombre' => $usuario->nombre,
       'contrasena' => $usuario->getContrasena(),
       'idRol' => $usuario->idRol,
@@ -81,7 +81,7 @@ class Usuario_model extends CI_Model
   {
     $this->db->where('id', $usuario->id);
 
-    return (bool) $this->db->update(self::TABLE, [
+    return (bool) $this->db->update($this->TABLE, [
       'nombre' => $usuario->nombre,
       'contrasena' => $usuario->getContrasena(),
       'idRol' => $usuario->idRol,
@@ -100,7 +100,7 @@ class Usuario_model extends CI_Model
   {
     $this->db->where('id', $id);
 
-    return (bool) $this->db->update(self::TABLE, [
+    return (bool) $this->db->update($this->TABLE, [
       'estaActivo' => false,
       'modificadoPor' => $modificadoPor,
       'fechaModificado' => date('Y-m-d H:i:s'),

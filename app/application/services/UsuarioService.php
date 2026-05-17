@@ -23,7 +23,7 @@ class UsuarioService implements IUsuarioService
    * Crear un usuario con validación de nombre, contraseña y rol
    * @param array{nombre: string, contrasena: string, idRol: int} $nuevo
    * @param int $creadoPor
-   * @throws Exception
+   * @throws RuntimeException
    * @return void
    */
   public function crear(array $nuevo, int $creadoPor): Usuario
@@ -31,7 +31,7 @@ class UsuarioService implements IUsuarioService
     $this->validarDatosCreacion($nuevo);
 
     if ($this->repository->findByNombre($nuevo['nombre']) !== null) {
-      throw new Exception("El nombre {$nuevo['nombre']} ya está en uso.", 1);
+      throw new RuntimeException("El nombre {$nuevo['nombre']} ya está en uso.", 1);
     }
 
     $usuario = new Usuario($nuevo);
@@ -54,13 +54,13 @@ class UsuarioService implements IUsuarioService
     $usuario = $this->repository->findById($id);
 
     if (!$usuario) {
-      throw new Exception("El usuario no existe", 1);
+      throw new RuntimeException("El usuario no existe", 1);
     }
 
     /** Si se eligió cambiar el nombre */
     if (isset($nuevo['nombre']) && $nuevo['nombre'] !== $usuario->nombre) {
       if ($this->repository->findByNombre($nuevo['nombre']) !== null) {
-        throw new Exception("El nombre {$nuevo['nombre']} ya está en uso.", 1);
+        throw new RuntimeException("El nombre {$nuevo['nombre']} ya está en uso.", 1);
       }
     }
 
@@ -83,7 +83,7 @@ class UsuarioService implements IUsuarioService
     $usuario = $this->repository->findById($id);
 
     if (!$usuario) {
-      throw new Exception("El usuario no existe", 1);
+      throw new RuntimeException("El usuario no existe", 1);
     }
 
     return $this->repository->softDelete($id, $modificadoPor);
